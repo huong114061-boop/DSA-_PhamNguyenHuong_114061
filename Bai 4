@@ -1,0 +1,47 @@
+#include<stdio.h>
+typedef struct{
+  char ten;
+  int msv;
+  float d1,d2,d3;
+}SV;
+typedef struct tagNode {
+	SV infor;
+	struct tagNode *link;
+}Node;
+typedef struct {
+	Node *pH,*pT;
+	int spt;
+}LList;
+void initList(LList *L){
+	L->pH =null;
+	L->pT = null;
+	L->spt =0;
+}
+bool emptyList(LList L){
+	return(L.spt==0);
+}
+void insert(LList *L,SV x){
+	Node *pp;
+	pp=(Node*)malloc(sizeof(Node));
+	pp->infor=x;
+	pp->link=null;
+	if(emptyList(*L)){
+		L->pH=pp;
+		L->pT=pp;
+	}
+	else{
+		pp->link=L->pH;
+		L->pH=pp;
+		L.spt++;
+	}
+}
+void nhap(SV *a){
+	printf("Nhap thông tin sinh vien:");
+	scanf("%s",a->ten);
+	scanf("%d",&a->msv);
+	scanf("%f%f%f",&a->d1,&a->d2,&a->d3);
+}
+void in()
+int main(){
+	
+}
