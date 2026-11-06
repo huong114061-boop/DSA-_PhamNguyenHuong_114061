@@ -1,0 +1,29 @@
+#include<stdio.h>
+typedef struct{
+  char ten;
+  int msv;
+  float d1,d2,d3;
+}SV;
+void nhap(SV a[],int n){
+	int i;
+	for(i=0;i<n;i++){
+		scanf("%s",a[i].ten);
+		scanf("%d",&a[i].msv);
+		scanf("%f%f%f",&a[i].d1,&a[i].d2,&a[i].d3);
+	}
+}
+void in(SV a[],int n){
+	int i=0;
+	for(;i<n;i++){
+		printf("%s ",a[i].ten);
+		printf("%d ",a[i].msv);
+		printf("%.2f %.2f %.2f\n",&a[i].d1,&a[i].d2,&a[i].d3);
+	}
+}
+int main(){
+	SV a[100];
+	int n;
+	scanf("%d",&n);
+	nhap(a,n);
+	in(a,n);
+}
