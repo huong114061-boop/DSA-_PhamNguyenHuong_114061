@@ -1,47 +1,153 @@
 #include<stdio.h>
-typedef struct{
-  char ten;
-  int msv;
-  float d1,d2,d3;
-}SV;
+#include<stdlib.h>
+typedef struct {
+	char hoten[30];
+	int msv;
+	float d1,d2,d3;
+}Data;
 typedef struct tagNode {
-	SV infor;
+	Data infor;
 	struct tagNode *link;
 }Node;
-typedef struct {
-	Node *pH,*pT;
+typedef struct{
+	Node *pHead;
+	Node *pTail;
 	int spt;
 }LList;
+
 void initList(LList *L){
-	L->pH =null;
-	L->pT = null;
-	L->spt =0;
+	L->pHead = NULL;
+	L->	pTail = NULL;
+	L->spt = 0;
 }
+
 bool emptyList(LList L){
-	return(L.spt==0);
+	return L.spt ==0;
 }
-void insert(LList *L,SV x){
+
+void insert_Head(LList *L, Data x){
 	Node *pp;
-	pp=(Node*)malloc(sizeof(Node));
-	pp->infor=x;
-	pp->link=null;
-	if(emptyList(*L)){
-		L->pH=pp;
-		L->pT=pp;
+	pp= (Node*)malloc (sizeof (Node));
+	pp->infor = x;
+	pp->link = NULL;
+	if(emptyList (*L)){
+		L->pHead = pp;
+		L->pTail = pp;
 	}
 	else{
-		pp->link=L->pH;
-		L->pH=pp;
-		L.spt++;
+		pp->link = L->pHead ;
+		L->	pHead = pp; 
+	}
+	L->spt ++;
+}
+
+void insert_end(LList *L, Data x){
+	Node *pp;
+	pp= (Node*) malloc(sizeof(Node));
+	pp->infor= x;
+	pp->link = NULL;
+	if(emptyList (*L)){
+		L->pHead = pp;
+		L->pTail = pp;
+	}
+	else{
+		pp->link = L->pTail ;
+		L->pTail =pp;
+	}
+	L->spt ++;
+}
+
+void insert_vitri(LList *L,Node *q,Data x){
+	Node *pp;
+	if(q ==NULL)	return;
+	else{
+		pp->infor =x;
+		pp->link =q->link ;
+		q->link = pp;
+		if(q==L->pTail )
+			L->pTail ==pp;
+		L->spt ++;
 	}
 }
-void nhap(SV *a){
-	printf("Nhap thông tin sinh vien:");
-	scanf("%s",a->ten);
-	scanf("%d",&a->msv);
-	scanf("%f%f%f",&a->d1,&a->d2,&a->d3);
+
+void nhap(Data *x){
+	printf("Nhap ma sinh vien:");
+	scanf("%d", &x->msv );
+	printf("Nhap ho ten:");
+	scanf("%s",x->hoten );
+	printf("Nhap diem: ");
+	scanf("%f%f%f",&(x->d1),&(x->d2),&(x->d3));
 }
-void in()
+
+void in(Data x){
+	printf("Ten: %s,ma: %d,diem 1: %.2f,diem 2: %.2f,diem 3: %.2f\n",x.hoten ,x.msv ,x.d1 ,x.d2 ,x.d3 );
+}
+
+void processList (LList L){
+	Node *pp=L.	pHead ;
+	while(pp!=NULL){
+		in(pp->infor );
+		pp=pp->link ;
+	}
+}
+
 int main(){
-	
-}
+	LList L;
+	int kt =0;
+	Data x;
+	initList(&L);
+	printf("\nChuong trinh lam viec voi DSLK don SV\n");
+	printf("1.Them nut vao dau danh sach\n");
+	printf("2.Them nut vao cuoi danh sach\n");
+	printf("3.Them nut vao sau 1 nut khac trong danh sach\n");
+	printf("9.Duyet danh sach\n");
+	printf("0.Thoat\n");
+	printf("Moi ban chon: ");
+	do{
+		int chon;
+		scanf("%d",&chon);
+		switch(chon){
+			case 0: kt= 1;
+					break;
+			case 1: 
+				printf("\nNhap thong tin sinh vien can them\n");
+				nhap(&x);
+				if(x.msv  > 0){
+					insert_Head(&L, x);
+					printf("Thong tin sinh vien da duoc them\n");
+				}
+				printf("Ban muon lam gi tiep theo\n");
+				break;
+			case 2:
+				printf("\nNhap thong tin sinh vien can them\n");
+				nhap(&x);
+				if(x.msv > 0){
+					insert_end(&L, x);
+					printf("Thong tin sinh vien da duoc them\n");
+				}
+				printf("Ban muon lam gi tiep theo\n");
+				break;
+			case 3:
+				printf("\nNhap vi tri nut muon them\n");
+				Node vitri;
+				scanf("%d",&vitri.link );
+				printf("\nNhap thong tin sinh vien can them\n");
+				nhap(&x);
+				if(x.msv > 0){
+					insert_vitri(&L,&vitri, x);
+					printf("Thong tin sinh vien da duoc them\n");
+				}
+				printf("Ban muon lam gi tiep theo\n");
+				break;
+			case 9:
+				if(L.spt !=0){
+					processList(L);
+				}
+				else
+					printf("Danh sach rong. Vui long them danh sach");
+				printf("\nBan muon lam gi tiep theo\n");
+				break;
+			}
+		}while(kt==0);
+	}
+
