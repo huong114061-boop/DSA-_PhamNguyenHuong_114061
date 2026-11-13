@@ -51,7 +51,7 @@ void insert_end(LList *L, Data x){
 		L->pTail = pp;
 	}
 	else{
-		pp->link = L->pTail ;
+		L->pTail ->link=pp ;
 		L->pTail =pp;
 	}
 	L->spt ++;
@@ -61,15 +61,26 @@ void insert_vitri(LList *L,Node *q,Data x){
 	Node *pp;
 	if(q ==NULL)	return;
 	else{
+		pp=(Node*)malloc (sizeof(Node));
 		pp->infor =x;
 		pp->link =q->link ;
 		q->link = pp;
 		if(q==L->pTail )
-			L->pTail ==pp;
+			L->pTail =pp;
 		L->spt ++;
 	}
 }
 
+
+void chentang(LList *L,Data x){
+	Node *pp=L->pHead ,*q;
+	while (pp!=NULL && pp->infor.msv <x.msv ){
+		q=pp;
+		pp=pp->link ;
+	}
+	if(pp==L->pHead )	insert_Head(L,x);
+	else insert_vitri(L,q,x);
+}
 void nhap(Data *x){
 	printf("Nhap ma sinh vien:");
 	scanf("%d", &x->msv );
@@ -80,7 +91,7 @@ void nhap(Data *x){
 }
 
 void in(Data x){
-	printf("Ten: %s,ma: %d,diem 1: %.2f,diem 2: %.2f,diem 3: %.2f\n",x.hoten ,x.msv ,x.d1 ,x.d2 ,x.d3 );
+	printf("Ten: %s, ma: %d, diem 1: %.2f, diem 2: %.2f, diem 3: %.2f\n",x.hoten ,x.msv ,x.d1 ,x.d2 ,x.d3 );
 }
 
 void processList (LList L){
@@ -93,6 +104,7 @@ void processList (LList L){
 
 int main(){
 	LList L;
+	Node *vitri;
 	int kt =0;
 	Data x;
 	initList(&L);
@@ -114,30 +126,29 @@ int main(){
 				nhap(&x);
 				if(x.msv  > 0){
 					insert_Head(&L, x);
-					printf("Thong tin sinh vien da duoc them\n");
+					printf("\nThong tin sinh vien da duoc them\n");
 				}
-				printf("Ban muon lam gi tiep theo\n");
+				printf("\nBan muon lam gi tiep theo\n");
 				break;
 			case 2:
 				printf("\nNhap thong tin sinh vien can them\n");
 				nhap(&x);
 				if(x.msv > 0){
 					insert_end(&L, x);
-					printf("Thong tin sinh vien da duoc them\n");
+					printf("\nThong tin sinh vien da duoc them\n");
 				}
-				printf("Ban muon lam gi tiep theo\n");
+				printf("\nBan muon lam gi tiep theo\n");
 				break;
 			case 3:
 				printf("\nNhap vi tri nut muon them\n");
-				Node vitri;
-				scanf("%d",&vitri.link );
+				scanf("%d",& vitri->link);
 				printf("\nNhap thong tin sinh vien can them\n");
 				nhap(&x);
 				if(x.msv > 0){
-					insert_vitri(&L,&vitri, x);
-					printf("Thong tin sinh vien da duoc them\n");
+					insert_vitri(&L,vitri, x);
+					printf("\nThong tin sinh vien da duoc them\n");
 				}
-				printf("Ban muon lam gi tiep theo\n");
+				printf("\nBan muon lam gi tiep theo\n");
 				break;
 			case 9:
 				if(L.spt !=0){
